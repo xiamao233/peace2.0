@@ -13,16 +13,22 @@
             font-family: 'Noto Sans SC', sans-serif;
             background: linear-gradient(135deg, #1a1c2c 0%, #4a192c 100%);
             min-height: 100vh;
+            margin: 0;
         }
         .perspective-1000 { perspective: 1000px; }
         .preserve-3d { transform-style: preserve-3d; }
         .rotate-y-0 { transform: rotateY(0deg); }
+        /* 避免加载时的闪烁 */
+        #root:empty { display: none; }
     </style>
-    <!-- 关键修复：防止 process.env 报错导致白屏 -->
     <script>
+        // 必须在所有脚本运行前定义，模拟环境变量环境
         window.process = { env: { API_KEY: "" } };
+        window.addEventListener('error', function(e) {
+            console.error('Runtime Error:', e.error);
+        });
     </script>
-    <!-- 引入 Babel 实时编译器 -->
+    <!-- 引入 Babel 编译器 -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="importmap">
 {
@@ -40,7 +46,10 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- 使用 text/babel 配合 data-type="module" 让浏览器直接执行 TSX -->
-    <script type="text/babel" data-type="module" data-presets="typescript,react" src="./index.tsx"></script>
+    <!-- 
+      注意：src="./index.tsx" 必须保证 index.tsx 在根目录。
+      data-type="module" 允许 Babel 处理 import 语句。
+    -->
+    <script type="text/babel" data-type="module" data-presets="typescript,react" src="index.tsx"></script>
 </body>
 </html>
