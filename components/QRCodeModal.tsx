@@ -10,7 +10,8 @@ interface QRCodeModalProps {
 const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
-  const currentUrl = window.location.href;
+  // 使用用户要求的固定网址
+  const targetUrl = 'https://xiamao233.github.io/peace2.0/';
 
   return (
     <div 
@@ -27,7 +28,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => {
           
           <div className="bg-white p-4 rounded-2xl inline-block shadow-inner mb-6">
             <QRCodeSVG 
-              value={currentUrl} 
+              value={targetUrl} 
               size={180}
               level="H"
               includeMargin={false}
@@ -43,7 +44,7 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ isOpen, onClose }) => {
           </div>
           
           <p className="text-pink-300/60 text-[10px] break-all mb-8 px-4 font-mono">
-            {currentUrl}
+            {targetUrl}
           </p>
           
           <button 
