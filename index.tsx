@@ -26,7 +26,7 @@ const getComfortMessage = async (): Promise<string> => {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: "用户正在使用一张'允许生气隔夜存档卡'。请提供一句简短、温柔的安抚语（50字内）。",
+      contents: "用户正在使用一张'允许生气隔夜存档卡'。请提供一句简短、温柔的安抚语（50字内）。告诉用户，情绪已经被安全封存，现在可以安心去睡觉，明天醒来再处理。",
     });
     return response.text || "把烦恼留给月亮，明天醒来又是新的开始。";
   } catch (error) {
@@ -39,7 +39,8 @@ const getComfortMessage = async (): Promise<string> => {
 
 const QRCodeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   if (!isOpen) return null;
-  const targetUrl = window.location.href; // 自动获取当前页面地址
+  // 按照要求修改为固定网址
+  const targetUrl = 'https://xiamao233.github.io/peace2.0/'; 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
       <div className="bg-gray-900 border border-white/20 p-8 rounded-3xl max-w-sm w-full shadow-2xl" onClick={e => e.stopPropagation()}>
@@ -49,6 +50,7 @@ const QRCodeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
           <div className="bg-white p-4 rounded-2xl inline-block shadow-inner mb-6">
             <QRCodeSVG value={targetUrl} size={180} level="H" />
           </div>
+          <p className="text-pink-300/40 text-[10px] break-all mb-8 font-mono">{targetUrl}</p>
           <button onClick={onClose} className="w-full py-3 bg-white/5 border border-white/10 rounded-xl text-white/80 hover:bg-white/10 transition-colors">知道了</button>
         </div>
       </div>
@@ -96,7 +98,7 @@ const ArchiveCard = ({ count, onUse, isLoading }: { count: number, onUse: () => 
               <div className="text-xs uppercase tracking-widest text-pink-400 font-bold mb-4 tracking-[0.2em]">Permission Card</div>
               <h1 className="text-2xl font-extrabold text-white mb-2 leading-tight">允许生气隔夜存档卡</h1>
               <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br from-pink-400 to-indigo-400 mb-8">*{count}</div>
-              <p className="text-white/60 text-sm mb-10 leading-relaxed px-4">当你此刻无法平复，不必强求和解。<br/>这份契约允许你将情绪封存，交给明日处理。</p>
+              <p className="text-white/60 text-sm mb-10 leading-relaxed px-4">当你此刻无法平复，不必强求和解。<br/>这份契约允许你将情绪封存，交给明日处理。<br/><span className="font-bold">如果韩雪婷耍赖，要给崔永生500块违约金。</span></p>
               <button 
                 disabled={count <= 0 || isLoading} 
                 onClick={(e) => { e.stopPropagation(); onUse(); }}
